@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>solace</title>
+</head>
+<body>
+    <h3>Edit your listing</h3>
+    <form method="post" action="/listings/<%= editlisting._id%>?_method=PUT">
+        <input name="listing[title]" value="<%= editlisting.title %>" type="text">
+        <br><br>
+        <textarea name="listing[description]"  ><%= editlisting.description %></textarea>
+        <br><br>
+        <input name="listing[image][url]" value="<%= editlisting.image.url %>" type="text">
+        <br><br>
+        <input name="listing[price]" value="<%= editlisting.price %>" type="number" >
+        <br><br>
+        <input name="listing[location]" value="<%= editlisting.location %>" type="text">
+        <br><br>
+        <input name="listing[country]" value="<%= editlisting.country %>" type="text">
+        <br><br>
+        <button>Edit</button>
+    </form>
+</body>
+</html>

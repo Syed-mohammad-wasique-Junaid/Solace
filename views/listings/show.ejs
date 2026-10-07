@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>solace</title>
+</head>
+<body>  
+    <h3>listing info about : <%= onelisting.title %></h3>
+    <ul>
+        <li>List title : <%= onelisting.title %></li>
+        <li>List description : <%= onelisting.description %></li>
+        <li>
+            <img src="<%= onelisting.image.url %>" alt="listing image">
+        </li>
+        <li>List price : &#8377; <%= onelisting.price.toLocaleString("en-IN") %></li>
+        <li>List location : <%= onelisting.location %></li>
+        <li>List country : <%= onelisting.country %></li>
+    </ul>
+    <br>
+    <a href="/listings/<%= onelisting._id %>/edit">Edit this listing</a>
+    <br><br>
+    <form method="post" action="/listings/<%= onelisting._id %>?_method=Delete">
+        <button>Delete this listing</button>
+    </form>
+</html>
