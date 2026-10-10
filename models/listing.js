@@ -1,3 +1,4 @@
+
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -18,10 +19,10 @@ const listingSchema = new Schema({
         },
         url: {
             type: String,
-            default: "https://unsplash.com/photos/a-white-house-surrounded-by-palm-trees-on-a-sunny-day-luUA4PLq2hs",
+            default: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80",
             set: (v) =>
                 v === ""
-                    ? "https://unsplash.com/photos/a-white-house-surrounded-by-palm-trees-on-a-sunny-day-luUA4PLq2hs"
+                    ? "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80"
                     : v
         }
     },
@@ -39,5 +40,5 @@ const listingSchema = new Schema({
     }
 });
 
-const listing = mongoose.model("listing",listingSchema);
-module.exports=listing;
+const listing = mongoose.model("listing", listingSchema);
+module.exports = listing;

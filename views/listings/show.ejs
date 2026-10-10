@@ -1,26 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>solace</title>
-</head>
-<body>  
-    <h3>listing info about : <%= onelisting.title %></h3>
-    <ul>
-        <li>List title : <%= onelisting.title %></li>
-        <li>List description : <%= onelisting.description %></li>
-        <li>
-            <img src="<%= onelisting.image.url %>" alt="listing image">
-        </li>
-        <li>List price : &#8377; <%= onelisting.price.toLocaleString("en-IN") %></li>
-        <li>List location : <%= onelisting.location %></li>
-        <li>List country : <%= onelisting.country %></li>
-    </ul>
-    <br>
-    <a href="/listings/<%= onelisting._id %>/edit">Edit this listing</a>
-    <br><br>
-    <form method="post" action="/listings/<%= onelisting._id %>?_method=Delete">
-        <button>Delete this listing</button>
-    </form>
-</html>
+<% layout('/layouts/boilerplate.ejs') -%>
+<div class="row mt-3">
+    <div class="col-8 offset-3">
+        <h3><b>Listing Details</b></h3>
+    </div>
+        <div class="card col-6 offset-3 show-card">
+            <img
+            src="<%= onelisting.image?.url || 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80' %>"
+            class="card-img-top show-img"
+            alt="listing-image"
+            onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80';"
+            >
+            <div class="card-body">
+                <p class="card-text">
+                    <b><%= onelisting.title %></b> <br>
+                    <%= onelisting.description %> <br>
+                    &#8377; <%= onelisting.price.toLocaleString("en-IN") %> <br>
+                    <%= onelisting.location %> <br>
+                    <%= onelisting.country %>
+                </p>
+            </div>
+        </div>
+        <br>
+        <div class="btns">
+            <a href="/listings/<%= onelisting._id %>/edit" 
+            class="btn btn-dark col-1 offset-3 edit-btn">Edit</a>
+
+            <form method="post" action="/listings/<%= onelisting._id %>?_method=Delete">
+                <button class="btn btn-dark offset-5">Delete</button>
+            </form>
+        </div>
+        
+</div>
