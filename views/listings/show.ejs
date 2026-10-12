@@ -14,7 +14,9 @@
                 <p class="card-text">
                     <b><%= onelisting.title %></b> <br>
                     <%= onelisting.description %> <br>
-                    &#8377; <%= onelisting.price.toLocaleString("en-IN") %> <br>
+                    &#8377; <%= onelisting.price != null
+                    ? onelisting.price.toLocaleString("en-IN")
+                    : "Price not available" %> / night <br>
                     <%= onelisting.location %> <br>
                     <%= onelisting.country %>
                 </p>
