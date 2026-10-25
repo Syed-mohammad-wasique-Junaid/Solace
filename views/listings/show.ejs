@@ -1,9 +1,9 @@
 <% layout('/layouts/boilerplate.ejs') -%>
 <div class="row mt-3">
     <div class="col-8 offset-3">
-        <h3><b>Listing Details</b></h3>
+        <h3><b><%= onelisting.title %></b></h3>
     </div>
-        <div class="card col-6 offset-3 show-card">
+        <div class="card col-6 offset-3 show-card listing-card">
             <img
             src="<%= onelisting.image?.url || 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80' %>"
             class="card-img-top show-img"
@@ -12,7 +12,6 @@
             >
             <div class="card-body">
                 <p class="card-text">
-                    <b><%= onelisting.title %></b> <br>
                     <%= onelisting.description %> <br>
                     &#8377; <%= onelisting.price != null
                     ? onelisting.price.toLocaleString("en-IN")
@@ -32,4 +31,40 @@
             </form>
         </div>
         
+        <div class="col-8 offset-3 mb-3">
+            <hr>
+            <h4>Leave a Review</h4>
+            <form action="/listings/<%= onelisting._id %>/reviews" method="post" 
+                novalidate class="needs-validation">
+                <div class="mb-3 mt-3">
+                    <label for="rating" class="form-label">Rating</label>
+                    <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range">
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="comment" class="form-label">Comments</label>
+                    <textarea name="review[comment] " id="comment" 
+                    cols="30" rows="5" 
+                    class="form-control" required></textarea>
+                    <div class="invalid-feedback">Please add some comments for review</div>
+                </div>
+                <button class="btn btn-outline-dark">Submit</button>
+            </form>
+            <hr>
+            <p><b>All reviews</b></p>
+            
+            <div class="row">
+                <% for(review of onelisting.reviews){ %>
+                    <div class="card col-5  ms-3 mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">CH7MKANDI</h5>
+                            <p class="card-text"><%= review.comment %></p>
+                            <p class="card-text"><%= review.rating %> Stars</p>
+                        </div>
+                        <form class="mb-3" method="post" action="/listings/<%= onelisting._id %>/reviews/<%= review._id %>?_method=DELETE">
+                            <button class="btn btn-sm btn-dark">Delete</button>
+                        </form>
+                    </div>
+                <% } %>
+            </div>
+        </div>
 </div>
