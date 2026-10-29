@@ -8,9 +8,13 @@ const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js");
 
-const listings = require("./routes/listing.js");
-const reviews = require("./routes/review.js");
+const listingRouter = require("./routes/listing.js");
+const reviewRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
 
 const mongo_url = "mongodb://127.0.0.1:27017/solace";
 
@@ -50,14 +54,32 @@ app.get("/", (req,res) => {
 app.use(session(sessionOptions));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req,res,next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     next();
-})
+});
 
-app.use("/listings", listings);
-app.use("/listings/:id/reviews", reviews);
+// app.get("/demouser",async(req,res) => {
+//     let fakeuser = new User({
+//         email : "student123@gmail.com",
+//         username : "CH7MKANDI"
+//     });
+
+//     let registereduser = await User.register(fakeuser,"pass1343");
+//     res.send(registereduser);
+// });
+
+app.use("/listings", listingRouter);
+app.use("/listings/:id/reviews", reviewRouter);
+app.use("/", userRouter);
 
 /*this below middleware is for any unknown page request handling 
 with earlier version syntax was -> "*" and now it is -> "/{*splat}" */
